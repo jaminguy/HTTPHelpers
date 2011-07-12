@@ -13,6 +13,26 @@
 //  Created by Matt Drance on 3/1/10.
 //  Copyright 2010 Bookhouse Software, LLC. All rights reserved.
 //
+//  Added to open source repository by Jamin Guy on 7/12/2011
+//  Copyright (c) 2011 Jamin Guy
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in
+//  all copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  THE SOFTWARE.
 
 #import "PRPConnection.h"
 
@@ -21,6 +41,7 @@
 @property (nonatomic, retain) NSURLConnection *connection;
 @property (nonatomic, copy)   NSURL *url;
 @property (nonatomic, copy) NSURLRequest *urlRequest;
+@property (nonatomic, assign) NSInteger httpResponseCode;
 @property (nonatomic, retain) NSMutableData *downloadData;
 @property (nonatomic, assign) NSInteger contentLength;
 
@@ -36,6 +57,7 @@
 
 @synthesize url;
 @synthesize urlRequest;
+@synthesize httpResponseCode;
 @synthesize connection;
 @synthesize contentLength;
 @synthesize downloadData;
@@ -122,7 +144,8 @@
 didReceiveResponse:(NSURLResponse *)response {
     if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
-        if ([httpResponse statusCode] == 200) {
+        self.httpResponseCode = [httpResponse statusCode];
+        if (self.httpResponseCode == 200) {
             NSDictionary *header = [httpResponse allHeaderFields];
             NSString *contentLen = [header valueForKey:@"Content-Length"];
             NSInteger length = self.contentLength = [contentLen integerValue];
