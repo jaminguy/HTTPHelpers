@@ -35,6 +35,7 @@
 //  THE SOFTWARE.
 
 #import "PRPConnection.h"
+#import "UIApplication+PRPNetworkActivity.h"
 
 @interface PRPConnection ()
 
@@ -121,10 +122,15 @@
 #pragma mark 
 
 - (void)start {
+    [[UIApplication sharedApplication] prp_pushNetworkActivity];
     self.connection = [NSURLConnection connectionWithRequest:self.urlRequest delegate:self];
 }
 
 - (void)stop {
+    if (self.connection) {
+        [[UIApplication sharedApplication] prp_popNetworkActivity];
+    }
+    
     [self.connection cancel];
     self.connection = nil;
     self.downloadData = nil;
@@ -140,8 +146,7 @@
 
 #pragma mark 
 #pragma mark NSURLConnectionDelegate
-- (void)connection:(NSURLConnection *)connection 
-didReceiveResponse:(NSURLResponse *)response {
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
     if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
         NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
         self.httpResponseCode = [httpResponse statusCode];
@@ -154,8 +159,7 @@ didReceiveResponse:(NSURLResponse *)response {
     }
 }
 
-- (void)connection:(NSURLConnection *)connection
-    didReceiveData:(NSData *)data {
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
     [self.downloadData appendData:data];
     float pctComplete = floor([self percentComplete]);
     if ((pctComplete - self.previousMilestone) >= self.progressThreshold) {
@@ -168,11 +172,13 @@ didReceiveResponse:(NSURLResponse *)response {
     NSLog(@"Connection failed");
     if (self.completionBlock) self.completionBlock(self, error);
     self.connection = nil;
+    [[UIApplication sharedApplication] prp_popNetworkActivity];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
     if (self.completionBlock) self.completionBlock(self, nil);
     self.connection = nil;
+    [[UIApplication sharedApplication] prp_popNetworkActivity];
 }
 
 @end
