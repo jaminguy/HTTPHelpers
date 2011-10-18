@@ -82,7 +82,7 @@ const float PRPWebViewControllerFadeDuration = 0.5;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self resetBackgroundColor];
-    //[self reload];
+    [self reload];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
