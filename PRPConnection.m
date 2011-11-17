@@ -168,8 +168,7 @@
     }
 }
 
-- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    NSLog(@"Connection failed");
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {    
     if (self.completionBlock) self.completionBlock(self, error);
     self.connection = nil;
     [[UIApplication sharedApplication] prp_popNetworkActivity];
