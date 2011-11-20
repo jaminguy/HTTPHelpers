@@ -174,7 +174,7 @@ const float PRPWebViewControllerFadeDuration = 0.5;
 }
 
 - (void)webView:(UIWebView *)wv didFailLoadWithError:(NSError *)error {
-    NSLog(@"webView fail: %@", error);
+    //NSLog(@"webView fail: %@", error);
     [self.activityIndicator stopAnimating];
     if ([self.delegate respondsToSelector:@selector(webController:didFailLoadWithError:)]) {
         [self.delegate webController:self didFailLoadWithError:error];
