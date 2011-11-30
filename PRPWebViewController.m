@@ -174,20 +174,21 @@ const float PRPWebViewControllerFadeDuration = 0.5;
 }
 
 - (void)webView:(UIWebView *)wv didFailLoadWithError:(NSError *)error {
-    NSLog(@"webView fail: %@", error);
+    //NSLog(@"webView fail: %@", error);
     [self.activityIndicator stopAnimating];
     if ([self.delegate respondsToSelector:@selector(webController:didFailLoadWithError:)]) {
         [self.delegate webController:self didFailLoadWithError:error];
-    } else {
-        if ([error code] != kCFURLErrorCancelled) {            
-            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Load Failed"
-                                                            message:@"The web page failed to load."
-                                                           delegate:nil cancelButtonTitle:@"OK"
-                                                  otherButtonTitles:nil];
-            [alert show];
-            [alert release];
-        }
-    }
+    } 
+//    else {
+//        if ([error code] != kCFURLErrorCancelled) {            
+//            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Load Failed"
+//                                                            message:@"The web page failed to load."
+//                                                           delegate:nil cancelButtonTitle:@"OK"
+//                                                  otherButtonTitles:nil];
+//            [alert show];
+//            [alert release];
+//        }
+//    }
 }
 
 @end
