@@ -61,7 +61,6 @@
     if(self) {
         services = [[NSMutableArray alloc] init];
         self.serviceType = @"_http._tcp";
-        [self setupServiceBrowser];
     }
     return self;
 }
@@ -93,7 +92,7 @@
 // Sent when a service appears
 - (void)netServiceBrowser:(NSNetServiceBrowser *)browser didFindService:(NSNetService *)aNetService moreComing:(BOOL)moreComing {
     aNetService.delegate = self;
-    [aNetService resolveWithTimeout:4.0];
+    [aNetService resolveWithTimeout:10.0];
     [services addObject:aNetService];    
 }
 
