@@ -66,9 +66,9 @@
 }
 
 - (void)setupServiceBrowser {
-    serviceBrowser = [[NSNetServiceBrowser alloc] init];
-    [serviceBrowser setDelegate:self];
-    [serviceBrowser searchForServicesOfType:self.serviceType inDomain:@""];
+    self.serviceBrowser = [[[NSNetServiceBrowser alloc] init] autorelease];
+    [self.serviceBrowser setDelegate:self];
+    [self.serviceBrowser searchForServicesOfType:self.serviceType inDomain:@""];
 }
 
 - (void)startBrowsing {
@@ -101,10 +101,6 @@
     [services removeObject:aNetService];    
 }
 
-- (void)handleError:(NSNumber *)error {
-    NSLog(@"An error occurred. Error code = %d", [error intValue]);
-}
-
 #pragma NSNetServiceDelegate
 
 - (void)netServiceDidResolveAddress:(NSNetService *)sender {
@@ -125,6 +121,9 @@
 
 - (void)netService:(NSNetService *)sender didNotResolve:(NSDictionary *)errorDict {
     NSLog(@"didNotResolve: %@", errorDict);
+    if([self.delegate respondsToSelector:@selector(bonjourBrowser:didNotResolve:)]) {
+        [self.delegate bonjourBrowser:self didNotResolve:errorDict];
+    }
 }
 
 @end

@@ -38,5 +38,6 @@
 @protocol BonjourBrowserDelegate <NSObject>
 
 - (void)bonjourBrowser:(BonjourBrowser *)sender foundServiceWithURL:(NSString *)serviceURL;
+- (void)bonjourBrowser:(BonjourBrowser *)sender didNotResolve:(NSDictionary *)errorDictionary;
 
 @end
