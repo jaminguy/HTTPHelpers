@@ -30,6 +30,7 @@ const float PRPWebViewControllerFadeDuration = 0.5;
 
 @synthesize backgroundColor;
 @synthesize webView;
+@synthesize activityIndicatorStyle;
 @synthesize activityIndicator;
 
 @synthesize showsDoneButton;
@@ -65,7 +66,7 @@ const float PRPWebViewControllerFadeDuration = 0.5;
     webView.delegate = self;
     [self.view addSubview:webView];
     
-    activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:self.activityIndicatorStyle];
     activityIndicator.autoresizingMask = UIViewAutoresizingFlexibleTopMargin |
                                         UIViewAutoresizingFlexibleRightMargin |
                                         UIViewAutoresizingFlexibleBottomMargin |
@@ -152,6 +153,11 @@ const float PRPWebViewControllerFadeDuration = 0.5;
         }
         self.view.backgroundColor = bgColor;
     }
+}
+
+- (void)setActivityIndicatorStyle:(UIActivityIndicatorViewStyle)style {
+    activityIndicatorStyle = style;
+    self.activityIndicator.activityIndicatorViewStyle = style;
 }
 
 #pragma mark -

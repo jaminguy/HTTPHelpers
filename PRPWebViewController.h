@@ -22,6 +22,7 @@
 
 @property (nonatomic, retain) UIColor *backgroundColor;
 @property (nonatomic, retain) UIWebView *webView;
+@property (nonatomic, assign) UIActivityIndicatorViewStyle activityIndicatorStyle;
 @property (nonatomic, retain) UIActivityIndicatorView *activityIndicator;
 
 @property (nonatomic, assign) BOOL showsDoneButton;
