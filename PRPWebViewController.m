@@ -46,13 +46,6 @@ const float PRPWebViewControllerFadeDuration = 0.5;
     [super dealloc];
 }
 
-- (void)viewDidUnload {
-    [super viewDidUnload];
-    
-    self.webView = nil;
-    self.activityIndicator = nil;
-}
-
 - (void)loadView {
     UIViewAutoresizing resizeAllMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     UIView *mainView = [[UIView alloc] initWithFrame:[[UIScreen mainScreen] applicationFrame]];
