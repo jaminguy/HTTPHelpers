@@ -105,7 +105,9 @@ const float PRPWebViewControllerFadeDuration = 0.5;
 
 - (void)reload {
     if (self.url) {
-        [self.webView loadRequest:[NSURLRequest requestWithURL:self.url]];
+        NSMutableURLRequest *urlRequest = [[NSMutableURLRequest alloc] initWithURL:self.url];
+        [urlRequest setCachePolicy:NSURLRequestReturnCacheDataElseLoad];
+        [self.webView loadRequest:urlRequest];
         self.webView.alpha = 0.0;
         [self.activityIndicator startAnimating];        
     }
